@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Рандомный</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>Рандомный</h1>
+    <div id="urod-place"></div>
+    <br />
+    <br />
+
+    <button id="generate" onclick="generate();">Сгенерировать</button>
+    <script type="text/javascript">
+      
+      function rand(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function getPageNumber() {
+        let maxId = 525232256;
+        let minId = 1;
+        let pageNumber = rand(minId, maxId);
+        return Math.round(pageNumber);
+      }
+
+      function generate() {
+        let pageNumber = getPageNumber();
+        let vkLink = "https://vk.com/id" + pageNumber;
+        getPageContent(vkLink);
+        let linkBody = $(
+          '<a target="_blank" href="' + vkLink + '">' + pageNumber + "</a>"
+        );
+        $("#urod-place").html("");
+        $("#urod-place").append(linkBody);
+      }
+
+      function getPageContent(link) {
+        let dom = "";
+        $.post(link, function(data) {
+          dom = $(data);
+          console.log(dom);
+        });
+      }
+
+      $(function() {
+        generate();
+      });
+    </script>
+  </body>
+</html>
